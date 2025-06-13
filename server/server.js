@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose=require('mongoose');
+const validator=require('validator')
 const bcrypt=require('bcrypt');
 const cors=require('cors');
 const app = express();
@@ -18,9 +19,9 @@ mongoose.connect(uri)
 app.post('/login', async (req, res) => {
   console.log('Request body:', req.body);
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).send('Username and password required');
+    const { username,role, password } = req.body;
+    if (!username ||!role|| !password) {
+      return res.status(400).send('All fields are required');
     }
      const existingUser = await User.findOne({ username });
     if (!existingUser) {
@@ -40,9 +41,12 @@ if (!isMatch) {
 
 app.post('/signup',async(req,res)=>{
   console.log(req.body);
-  const {username,password,confirmpassword}=req.body;
-  if (!username || !password||!confirmpassword) {
+  const {username,role,password,confirmpassword}=req.body;
+  if (!username ||!role|| !password||!confirmpassword) {
       return res.status(400).send('All fields are required');
+    }
+    if(!validator.isStrongPassword(password,{minLength:8,minSymbols:1,minUppercase:1,minNumbers:1})){
+      return res.status(400).json({error:'Weak Password'});
     }
     if(password!=confirmpassword){
       return res.status(400).send('Password doesnt match')
@@ -53,9 +57,8 @@ app.post('/signup',async(req,res)=>{
   console.log("User already exists");
   return res.status(409).send('User already exists');
 }
-
      const hashedPassword = await bcrypt.hash(password, 10);
-     const newUser=new User({username,password:hashedPassword});
+     const newUser=new User({username,role,password:hashedPassword});
      await newUser.save();
     res.status(201).send('User registred sucessfully');
   }

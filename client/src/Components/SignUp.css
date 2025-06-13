@@ -1,15 +1,82 @@
-.form{
-background-color: rgb(67, 65, 65);
-padding: 2px 10px;
-align-items: center;
-justify-content: center;
-width: 200px;
-margin: 100px 450px;
-height: 45vh;
-border-radius: 10px;
+:root {
+  --primary-color: #4CAF50;       /* Green for buttons, highlights */
+  --accent-color: #FF9800;        /* Orange for call to action */
+  --card-bg-color: #FAFAFA;       /* Light card bg */
+  --text-color: #333333;          /* Main text */
+  --border-color: #DDDDDD;
+          /* Light border */
 }
-button{
-    &:hover{
-        cursor: pointer;
-    }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  background: linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%);
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signupform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%);
+}
+.form {
+  background-color: var(--card-bg-color);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: 3rem auto;
+}
+
+.form h1 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.form input,
+.form select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.form button {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+  background-color: var(--accent-color);
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 1.5rem;
+  }
 }

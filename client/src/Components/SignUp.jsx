@@ -2,16 +2,17 @@ import React,{useState} from 'react'
 import './SignUp.css'
 export default function SignUp() {
     const [name,setName]=useState('');
+    const [role,setRole]=useState('');
     const [password,setPassword]=useState('');
     const [confirmpassword,setConfirmpassword]=useState('');
     const eventhandle=async (e)=>{
         e.preventDefault();
-        console.log(name,password,confirmpassword);
+        console.log(name,role,password,confirmpassword);
         try{
         const res=await fetch('http://localhost:3000/signup',{
           method:'POST',
           headers:{'Content-Type': 'application/json' },
-          body:JSON.stringify({username:name,password,confirmpassword}),
+          body:JSON.stringify({username:name,role,password,confirmpassword}),
         });
         if (res.ok) {
         const text=await res.text();
@@ -27,11 +28,19 @@ export default function SignUp() {
       }
     }
   return (
-    <div>
+    <div className='signupform'>
       <form onSubmit={eventhandle} className='form'>
-        <h1>SingUp Here</h1>
+        <h1>SignUp Here</h1>
         <label>Username : </label>
         <input type='text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+        <br/>
+        <label for='role'>Role : </label>
+        <select id='role' name='role' value={role} onChange={(e)=>setRole(e.target.value)} required>
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="family">Family</option>
+        </select>
         <br/>
         <label>Password : </label>
         <input type='password' value={password} onChange={(e)=>setPassword(e.target.value)}></input>
